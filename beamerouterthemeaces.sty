@@ -1,0 +1,119 @@
+\mode<presentation>
+
+\usepackage{tikz}	% For fancy decorations
+
+% I should fix these up to be more robust against color changes
+
+\setbeamercolor{title in section foot}{fg=acesblue}
+\setbeamercolor{author in head/foot}{parent=footerlike, fg=acesfg}
+\setbeamercolor{title in head/foot}{parent=footerlike, fg=acesgreen}
+
+
+% \setbeamercolor{author in head/foot}{parent=section in head/foot}
+% \setbeamercolor{title in head/foot}{parent=subsection in head/foot}
+
+\usesectionheadtemplate
+  {\hfill\insertsectionhead}
+  {\hfill\color{fg!50!bg}\insertsectionhead}
+
+
+% --------------------------
+
+% --------------------------
+% Footer
+% --------------------------
+\defbeamertemplate*{footline}{aces theme}{%
+    % Top line
+    \vspace{2pt}%
+    {\color{acesgreen}\hrule height 0.5pt}%
+    \vspace{2pt}%
+    
+    % Footer content boxes
+    \hbox{%
+        % Logo box
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+            \vbox to 6.5ex{\vfill\hbox{\includegraphics[height=4ex]{images/ifca-csic-uc.png}}\vfill}%
+        \end{beamercolorbox}%
+        % Author box - left aligned
+        \begin{beamercolorbox}[wd=.25\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+            \vbox to 6.5ex{\vfill\hbox{\usebeamerfont{author in head/foot}\insertshortauthor}\vfill}%
+        \end{beamercolorbox}%
+        % Title box - right aligned
+        \begin{beamercolorbox}[wd=.5\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+            \vbox to 6.5ex{\vfill\raggedleft\usebeamerfont{title in head/foot}\textit{\insertshorttitle}\vfill}%
+        \end{beamercolorbox}%
+    }%
+    
+    % Frame number box
+    \begin{tikzpicture}[overlay]
+        \usebeamercolor[fg]{title in head/foot}
+        \draw[draw, rounded corners=2pt, line width=0.8pt] 
+            (\paperwidth-8ex,1.5ex) rectangle (\paperwidth-2ex,5.5ex);
+        \node at (\paperwidth-5ex,3.5ex) {\tiny\insertframenumber/\inserttotalframenumber};
+    \end{tikzpicture}%
+}
+
+\defbeamertemplate*{footline}{aces theme section}{%
+    % Top line
+    \vspace{2pt}%
+    {\color{acesgreen}\hrule height 0.5pt}%
+    \vspace{2pt}%
+    
+    % Footer content boxes
+    \hbox{%
+        % Logo box
+        \begin{beamercolorbox}[wd=.15\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+            \vbox to 6.5ex{\vfill\hbox{\includegraphics[height=4ex]{images/ifca-csic-uc.png}}\vfill}%
+        \end{beamercolorbox}%
+        % Author box - left aligned
+        \begin{beamercolorbox}[wd=.25\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{author in head/foot}%
+            \vbox to 6.5ex{\vfill\hbox{\usebeamerfont{author in head/foot}\insertshortauthor}\vfill}%
+        \end{beamercolorbox}%
+        % Title box - right aligned
+        \begin{beamercolorbox}[wd=.5\paperwidth,ht=6.5ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in section foot}%
+            \vbox to 6.5ex{\vfill\raggedleft\usebeamerfont{title in head/foot}\textit{\insertshorttitle}\vfill}%
+        \end{beamercolorbox}%
+    }%
+    
+    % Frame number box
+    \begin{tikzpicture}[overlay]
+        \usebeamercolor[fg]{title in section foot}
+        \draw[draw, rounded corners=2pt, line width=0.8pt] 
+            (\paperwidth-8ex,1.5ex) rectangle (\paperwidth-2ex,5.5ex);
+        \node at (\paperwidth-5ex,3.5ex) {\tiny\insertframenumber/\inserttotalframenumber};
+    \end{tikzpicture}%
+}
+
+
+\defbeamertemplate*{frametitle}{aces theme}[1][left]{%
+    % Calculate full width including margins
+    \@tempdima=\textwidth%
+    \advance\@tempdima by\beamer@leftmargin%
+    \advance\@tempdima by\beamer@rightmargin%
+    
+    % Draw line at very top using TikZ
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw[color=acesgreen, line width=6.5pt] 
+            (current page.north west) -- (current page.north east);
+    \end{tikzpicture}%
+    
+    \vbox{}\vskip-5ex%
+    
+    % Frame title box
+    \begin{beamercolorbox}[sep=0.3cm,#1,wd=\the\@tempdima]{title in head/foot}%
+        \usebeamerfont{frametitle}%
+        \insertframetitle%
+        \ifx\insertframesubtitle\@empty%
+        \else%
+            \par\vspace{0.5ex}%
+            \usebeamerfont{framesubtitle}\insertframesubtitle%
+        \fi%
+    \end{beamercolorbox}%
+    
+    \vspace*{-0.2\baselineskip}
+}
+
+
+
+\mode<all>
+\endinput

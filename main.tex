@@ -1,0 +1,107 @@
+\documentclass[11 pt,t,aspectratio=169]{beamer}
+\usetheme{aces}
+
+\title{Your Presentation Title}
+\subtitle{Optional Subtitle}
+
+\author{John Doe}
+\email{john.doe@example.com}
+\institute{Advanced Computing and e-Science Group\\\url{https://advancedcomputing.ifca.es}}
+
+\event{Conference Name 2025}
+\date{June 12, 2025}
+
+\titlegraphic{\hfill\includegraphics[height=1.5cm]{logo}}
+
+%\titlegraphic{\includegraphics[height=0.7cm]{images/ifca-csic-uc.png}}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[noframenumbering]{Table of contents}
+    \setbeamertemplate{section in toc}[sections numbered]
+    \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Examples}
+
+\subsection{Lists}
+
+\begin{frame}
+    \frametitle{Lists}
+    \begin{columns}[T,onlytextwidth]
+        \column{0.33\textwidth}
+        Items
+        \begin{itemize}
+            \item Milk
+                \begin{itemize}
+                    \item Cow
+                    \item Sheep
+                \end{itemize}
+            \item Eggs
+            \item Potatos
+        \end{itemize}
+
+        \column{0.33\textwidth}
+        Enumerations
+        \begin{enumerate}
+            \item First,
+            \item Second and
+            \item Last.
+                \begin{enumerate}
+                    \item But not,
+                    \item least!
+                \end{enumerate}
+        \end{enumerate}
+
+        \column{0.33\textwidth}
+        Descriptions
+        \begin{description}
+            \item[PowerPoint] Meeh.
+            \item[Beamer] Yeeeha.
+        \end{description}
+    \end{columns}
+\end{frame}
+
+\subsection{Blocks}
+\begin{frame}
+    \frametitle{Blocks}
+
+    \begin{block}{Standard Block}
+        This is a standard block.
+    \end{block}
+
+    \begin{exampleblock}{Example Block}
+        This is an example block.
+    \end{exampleblock}
+
+    \begin{alertblock}{Alert Block}
+        This is an alert block.
+    \end{alertblock}
+
+    \begin{noteblock}
+        This is a note
+    \end{noteblock}
+
+    \begin{noteblock}[wd=5cm]
+        Another note, with width
+    \end{noteblock}
+
+\end{frame}
+
+\section{Ending}
+
+\plain{\Huge Questions?}
+
+\final
+
+\addtocounter{framenumber}{-1}
+\begin{frame}[c]{Extra page}{It doesn't add to the total page count}
+    \begin{itemize}
+        \item Use \alert{\texttt{addtocounter\{framenumber\}\{-1\}}} for extra slides (like this one) to prevent it from screwing up the page numbering.
+    \end{itemize}
+\end{frame}
+
+
+\end{document}

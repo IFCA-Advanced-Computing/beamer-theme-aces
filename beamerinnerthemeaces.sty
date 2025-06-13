@@ -1,0 +1,269 @@
+\mode<presentation>
+
+\usepackage{tikz}
+
+
+%-----------------------------------------------------------------------------
+% OPTIONS
+
+\DeclareOptionBeamer{bullet}{\def\beamer@Santander@bullet{#1}}
+\DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+
+\ProcessOptionsBeamer
+
+
+%-----------------------------------------------------------------------------
+% MARGINS
+
+\newlength{\beamer@aces@normalmargin}
+\setlength{\beamer@aces@normalmargin}{.06\paperwidth}
+\setbeamersize{text margin left=\beamer@aces@normalmargin}
+\setbeamersize{text margin right=\beamer@aces@normalmargin}
+\setlength\leftmargini{.6\beamer@aces@normalmargin}
+\setlength\leftmarginii{.6\beamer@aces@normalmargin}
+\setlength\leftmarginiii{.6\beamer@aces@normalmargin}
+
+
+
+
+% -----------------------
+% Title page
+% -----------------------
+
+% Define custom commands for graphics paths (with default values)
+\newcommand{\titlepagebackground}{images/ifca-background.png}
+\newcommand{\institutionlogo}{images/ifca-csic-uc.png}
+
+% Declare Beamer options that can override the defaults
+\DeclareOptionBeamer{backgroundimage}{\renewcommand{\titlepagebackground}{#1}}
+\DeclareOptionBeamer{institutionlogo}{\renewcommand{\institutionlogo}{#1}}
+
+% Set the actual defaults using ExecuteOptionsBeamer
+\ExecuteOptionsBeamer{%
+    backgroundimage={images/ifca-background.png},
+    institutionlogo=images/ifca-csic-uc.png
+}
+
+% Define additional commands for new fields
+\newcommand{\eventname}{}
+\newcommand{\authoremail}{}
+
+% Commands to set the new fields
+\newcommand{\event}[1]{\renewcommand{\eventname}{#1}}
+\newcommand{\email}[1]{\renewcommand{\authoremail}{#1}}
+
+\defbeamertemplate*{title page}{aces theme}{%
+    \vskip1.5em%
+
+    % Top section with two columns: logos (left) and date/event (right)
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            % Institution logo (only if not empty)
+            \ifx\institutionlogo\@empty%
+            \else%
+                \includegraphics[height=1.5cm]{\institutionlogo}%
+            \fi%
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \raggedleft% Right align the content
+            % Event name
+            \ifx\eventname\@empty%
+            \else%
+                {\usebeamerfont{event}\usebeamercolor[fg]{event}\eventname\par}%
+            \fi%
+            % Date
+            {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+        \end{column}
+    \end{columns}
+
+    \vfill%
+
+    % Center section - Title
+    \vbox{
+        \vspace{1cm}%
+        % Title
+        {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+        \ifx\insertsubtitle\@empty%
+        \else%
+            \vskip0.25em%
+            {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+        \fi%
+    }
+
+    % Draw line below title - full slide width
+    \vskip1.5em%
+    \hspace*{-\beamer@leftmargin}%
+    \color{acesgreen}%
+    \rule{\paperwidth}{1pt}%
+    \vskip0.5em%
+
+    \vfill%
+
+    % Bottom section - Author info
+    \vbox{
+        \vspace{0.5cm}
+
+        % Author
+        {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}
+
+        % Author email (only if not empty)
+        \ifx\authoremail\@empty%
+        \else%
+            {{\usebeamerfont{author}\usebeamercolor[fg]{author}\url{\authoremail}}\par}%
+        \fi%
+
+        \vskip1em%
+        % Institute
+        {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}
+
+        \vspace{1cm}
+
+        % Title graphic (user-defined via \titlegraphic{})
+        \ifx\inserttitlegraphic\@empty%
+        \else%
+            \inserttitlegraphic\par%
+            \vspace{0.5cm}%
+        \fi%
+    }
+
+        % Background image positioned at the very bottom right
+    \ifx\titlepagebackground\@empty%
+    \else%
+        \begin{tikzpicture}[remember picture,overlay]
+            % Position at absolute bottom
+            \node[anchor=south east, opacity=1, inner sep=0pt, outer sep=0pt] at (current page.south east) {%
+                \includegraphics[width=0.5\paperwidth]{\titlepagebackground}
+            };
+        \end{tikzpicture}%
+    \fi%
+}
+
+% Redefine \maketitle to work properly with Beamer - remove ALL decorations
+\renewcommand{\maketitle}{%
+    \begingroup%
+    % Explicitly remove all possible frame decorations
+    \setbeamertemplate{headline}{}%
+    \setbeamertemplate{footline}{}%
+    \setbeamertemplate{sidebar left}{}%
+    \setbeamertemplate{sidebar right}{}%
+    \setbeamertemplate{navigation symbols}{}%
+    \begin{frame}[plain,noframenumbering]
+        \titlepage
+    \end{frame}%
+    \endgroup%
+}
+
+
+% ----------------
+
+\def\separator{
+  \begin{tikzpicture}
+    \draw[acesorange, fill=acesorange] (0,0) rectangle (\textwidth, 0.4pt);
+  \end{tikzpicture}%
+  \par%
+}
+
+%-----------------------------------------------------------------------------
+% ITEMS
+
+\defbeamertemplate{itemize item}{squarealt}%
+{\tiny\raise.5ex\hbox{\donotcoloroutermaths$\blacksquare$}}
+\defbeamertemplate{itemize subitem}{squarealt}%
+{\tiny\raise.4ex\hbox{\donotcoloroutermaths$\square$}}
+\defbeamertemplate{itemize subsubitem}{squarealt}%
+{\tiny\raise.3ex\hbox{\donotcoloroutermaths$\blacksquare$}}
+% 
+\defbeamertemplate{itemize item}{circlealt}%
+{\small\raise.2ex\hbox{\donotcoloroutermaths$\bullet$}}
+\defbeamertemplate{itemize subitem}{circlealt}%
+{\small\raise.1ex\hbox{\donotcoloroutermaths$\circ$}}
+\defbeamertemplate{itemize subsubitem}{circlealt}%
+{\scriptsize\raise.1ex\hbox{\donotcoloroutermaths$\bullet$}}
+\setbeamertemplate{items}[circlealt]
+% 
+\def\circletext{circle}
+\ifx\beamer@Santander@bullet\circletext
+  \setbeamertemplate{items}[circlealt]
+\else
+  \setbeamertemplate{items}[squarealt]
+\fi
+
+\setbeamertemplate{blocks}[rounded=false,shadow=\beamer@themerounded@shadow]
+%-----------------------------------------------------------------------------
+
+% Command to automatically insert section overview at each section
+\AtBeginSection[]{%
+\setbeamertemplate{footline}[aces theme section]
+    \begin{frame}
+        % White background for right half using tikz - covers entire right side
+        \begin{tikzpicture}[remember picture,overlay]
+            \fill[white] ([xshift=0.5\paperwidth]current page.north west) rectangle (current page.south east);
+        \end{tikzpicture}
+
+        % Calculate full width including margins
+        \@tempdima=\textwidth%
+        \advance\@tempdima by\beamer@leftmargin%
+        \advance\@tempdima by\beamer@rightmargin%
+    
+        % Draw line at very top using TikZ
+        \begin{tikzpicture}[remember picture,overlay]
+            % Left half - first color
+            \draw[color=acesgreen, line width=6.5pt] 
+                (current page.north west) -- ([xshift=0.5\paperwidth]current page.north west);
+            % Right half - second color
+            \draw[color=acesblue, line width=6.5pt] 
+                ([xshift=0.5\paperwidth]current page.north west) -- (current page.north east);
+            \end{tikzpicture}%
+        
+        \vbox{}\vskip-5ex%
+        
+        \begin{columns}[T]
+            % Left column - Title and all sections with current highlighted
+            \begin{column}{0.5\textwidth}
+                \vspace{0cm}
+                % Title
+                {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}Outline\par}
+                \vspace{0.3cm}
+                
+                \setbeamertemplate{section in toc}[sections numbered]
+
+                \tableofcontents[
+                    currentsection,
+                    hideothersubsections,
+                    sectionstyle=show/shaded,
+                    subsectionstyle=hide
+                ]
+            \end{column}
+            
+            % Right column - Subsections of current section
+            \begin{column}{0.5\textwidth}
+                \vspace{1.5cm}
+                \hspace{0.5cm}                              
+
+                \parbox[t]{\dimexpr\textwidth-1cm\relax}{%
+                    \tableofcontents[
+                        currentsection,
+                        hideothersubsections,
+                        sectionstyle=hide,
+                        subsectionstyle=show/shaded/hide
+                    ]
+
+                }
+            \end{column}
+        \end{columns}
+    \end{frame}
+    \setbeamertemplate{footline}[aces theme] % reset back to default
+}
+
+
+
+%-----------------------------------------------------------------------------
+% BLOCKS
+\newenvironment<>{noteblock}[2][]
+    {\begin{beamercolorbox}[sep=3mm, rounded=false, center, shadow=\beamer@themerounded@shadow, #1]{note}#2}
+    {\end{beamercolorbox}}
+%-----------------------------------------------------------------------------
+
+
+\mode<all>

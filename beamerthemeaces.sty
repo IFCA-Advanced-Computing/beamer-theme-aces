@@ -1,0 +1,122 @@
+\usepackage{appendixnumberbeamer}
+%\usepackage{Inconsolata}
+
+\usepackage{hyperref}
+\usepackage{tikz}	
+
+\mode<presentation>
+
+\usecolortheme{aces}
+\usefonttheme{aces}
+\useoutertheme{aces}
+\useinnertheme{aces}
+
+\setbeamertemplate{footline}[aces theme]
+
+% Process options
+\ProcessOptionsBeamer
+
+%-----------------------------------------------------------------------------
+% CUSTOM FRAMES
+
+\newcommand{\plain}[2][]{%
+    \begingroup
+    \setbeamercolor{background canvas}{
+        use=palette primary,
+        parent=palette primary
+    }
+    \begin{frame}[plain,c,noframenumbering]{#1}
+        \begin{center}
+            \usebeamercolor[fg]{palette primary}
+            \usebeamerfont{plain title}
+            #2
+        \end{center}
+    \end{frame}
+    \endgroup
+}
+
+\newcommand{\final}[2]{%
+    \begin{frame}[plain,noframenumbering]
+        \vskip1.5em%
+    
+        % Top section with two columns: logos (left) and date/event (right)
+        \begin{columns}[T]
+            \begin{column}{0.5\textwidth}
+                % Institution logo (only if not empty)
+                \ifx\institutionlogo\@empty%
+                \else%
+                    \includegraphics[height=1.5cm]{\institutionlogo}%
+                \fi%
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \raggedleft% Right align the content
+                % Event name
+                \ifx\eventname\@empty%
+                \else%
+                    {\usebeamerfont{event}\usebeamercolor[fg]{event}\eventname\par}%
+                \fi%
+                % Date
+                {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+            \end{column}
+        \end{columns}
+
+        \vfill%
+    
+        % Center section - Title
+        \vbox{
+            \vspace{1cm}%
+             % Title
+             {\usebeamerfont{title}\usebeamercolor[fg]{title}#1\par}%
+             
+            \vskip0.25em%
+            {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}#2\par}%
+             
+        }
+    
+        % Draw line below title - full slide width
+        \vskip1.5em%
+        \hspace*{-\beamer@leftmargin}%
+        \color{acesgreen}%
+        \rule{\paperwidth}{1pt}%
+        \vskip0.5em%
+
+        \vfill%
+    
+        % Bottom section - Author info
+        \vbox{
+            \vspace{0.5cm}
+    
+            % Author
+            {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}
+    
+            % Author email (only if not empty)
+            \ifx\authoremail\@empty%
+            \else%
+                {{\usebeamerfont{author}\usebeamercolor[fg]{author}\url{\authoremail}}\par}%
+            \fi%
+    
+            \vskip1em%
+            % Institute
+            {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}
+    
+            \vspace{1cm}
+    
+        }
+    
+        \begin{tikzpicture}[remember picture,overlay]
+            % Position at absolute bottom
+            \node[anchor=south east, opacity=1, inner sep=0pt, outer sep=0pt] at (current page.south east) {%
+                \includegraphics[width=0.5\paperwidth]{\titlepagebackground}
+            };
+        \end{tikzpicture}%
+    \end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Navigation  symbols %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{navigation symbols}{} 	% Turns off PDF navigation symbols
+
+\mode<all>
+\endinput
